@@ -1,44 +1,69 @@
 export const initialState = {
-  prevOp: "",
-  currOp: "",
-  operation: "",
-  result: "",
+  prevOp: 0,
+  currOp: 0,
+  operation: null,
+  result: 0,
 };
 
 export function reducer(state, action) {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
-    case "operation":
+    case "add":
       return {
         ...state,
         operation: action.payload,
-        prevOp: eval(state.prevOp + state.operation + state.currOp),
-        currOp: "",
-        result: eval(state.prevOp + state.operation + state.currOp),
+        prevOp: +state.prevOp + +state.currOp,
+        currOp: 0,
+        result: action.payload,
+      };
+    case "subtract":
+      return {
+        ...state,
+        operation: action.payload,
+        prevOp: state.prevOp - state.currOp,
+        currOp: 0,
+        result: action.payload,
+      };
+    case "multiply":
+      return {
+        ...state,
+        operation: action.payload,
+        prevOp: state.prevOp * state.currOp,
+        currOp: 0,
+        result: action.payload,
+      };
+    case "divide":
+      return {
+        ...state,
+        operation: action.payload,
+        prevOp: state.prevOp / state.currOp,
+        currOp: 0,
         result: action.payload,
       };
 
     case "number":
       return {
         ...state,
-        currOp: state.currOp + action.payload,
-        result: action.payload,
+        currOp: +state.currOp + +action.payload,
+        result:
+          state.currOp === 0 ? action.payload : state.result + action.payload,
       };
 
     case "computing":
+      console.log(state, action);
       return {
         ...state,
-        currOp: "",
-        prevOp: eval(state.prevOp + state.operation + state.currOp),
-        result: eval(state.prevOp + state.operation + state.currOp),
-        prevOp: "",
+        prevOp: eval(state.prevOp + state.operation + +state.currOp),
+        result: eval(state.prevOp + state.operation + +state.currOp),
       };
 
     case "clear":
       return {
         ...state,
-        prevOp: "",
-        currOp: "",
-        operation: "",
+        prevOp: 0,
+        currOp: 0,
+        operation: null,
         result: 0,
       };
 

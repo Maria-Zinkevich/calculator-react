@@ -1,0 +1,12 @@
+.display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 90px;
+    padding-right: 5px;
+    
+    color: #80c9c9;
+    font-size: 4em;
+
+    background: #2b293d;
+}
