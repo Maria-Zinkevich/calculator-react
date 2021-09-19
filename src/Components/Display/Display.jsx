@@ -1,5 +1,7 @@
 import styles from "../Display/display.module.css";
+import { useResultValue } from "../../Contex";
 
-export const Display = ({ result }) => {
-  return <div className={`${styles.display}`}>{result}</div>;
+export const Display = () => {
+  const resultContext = useResultValue();
+  return <div className={`${styles.display}`}>{resultContext.result}</div>;
 };
