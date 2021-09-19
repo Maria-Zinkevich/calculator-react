@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styles from "../Keypad/keypad.module.css";
-import { useResultValue, useValue } from "../../Contex";
+import { useResultValue, useValue } from "../../Context";
 
 export const Keypad = () => {
   const result = useValue();

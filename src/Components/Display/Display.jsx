@@ -1,5 +1,5 @@
 import styles from "../Display/display.module.css";
-import { useResultValue } from "../../Contex";
+import { useResultValue } from "../../Context";
 
 export const Display = () => {
   const resultContext = useResultValue();

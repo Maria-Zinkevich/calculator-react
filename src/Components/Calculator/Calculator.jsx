@@ -1,7 +1,7 @@
 import { Keypad } from "../Keypad/Keypad";
 import { Display } from "../Display/Display";
 import styles from "../Calculator/calculator.module.css";
-import { useResultValue } from "../../Contex";
+import { useResultValue } from "../../Context";
 
 export const Calculator = () => {
   const resultFromContex = useResultValue();
