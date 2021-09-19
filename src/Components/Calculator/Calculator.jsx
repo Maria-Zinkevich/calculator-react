@@ -1,14 +1,14 @@
 import { Keypad } from "../Keypad/Keypad";
 import { Display } from "../Display/Display";
-import { useState } from "react";
 import styles from "../Calculator/calculator.module.css";
+import { useResultValue } from "../../Contex";
 
 export const Calculator = () => {
-  const [result, setResult] = useState(0);
+  const resultFromContex = useResultValue();
   return (
     <div className={`${styles.calculator}`}>
-      <Display result={result} />
-      <Keypad setResult={setResult} />
+      <Display result={resultFromContex.result} />
+      <Keypad />
     </div>
   );
 };

@@ -3,11 +3,10 @@ export const initialState = {
   currOp: 0,
   operation: null,
   result: 0,
+  displayString: "",
 };
 
 export function reducer(state, action) {
-  console.log(state);
-  console.log(action);
   switch (action.type) {
     case "add":
       return {
@@ -16,46 +15,79 @@ export function reducer(state, action) {
         prevOp: +state.prevOp + +state.currOp,
         currOp: 0,
         result: action.payload,
+        displayString: state.displayString + action.payload,
       };
     case "subtract":
       return {
         ...state,
         operation: action.payload,
-        prevOp: state.prevOp - state.currOp,
+        prevOp:
+          state.prevOp === 0 ? state.currOp : +state.prevOp - +state.currOp,
         currOp: 0,
         result: action.payload,
+        displayString: state.displayString + action.payload,
       };
     case "multiply":
-      return {
-        ...state,
-        operation: action.payload,
-        prevOp: state.prevOp * state.currOp,
-        currOp: 0,
-        result: action.payload,
-      };
+      if (state.operation === "=") {
+        return {
+          ...state,
+          operation: action.payload,
+          currOp: 0,
+          prevOp: state.prevOp,
+          result: action.payload,
+          displayString: state.displayString + action.payload,
+        };
+      } else {
+        return {
+          ...state,
+          operation: action.payload,
+          currOp: state.currOp === 0 ? 1 : +state.prevOp * +state.currOp,
+          prevOp:
+            state.prevOp === 0 ? state.currOp : +state.prevOp * +state.currOp,
+          result: action.payload,
+          displayString: state.displayString + action.payload,
+        };
+      }
+
     case "divide":
-      return {
-        ...state,
-        operation: action.payload,
-        prevOp: state.prevOp / state.currOp,
-        currOp: 0,
-        result: action.payload,
-      };
+      if (state.operation === "=") {
+        return {
+          ...state,
+          operation: action.payload,
+          currOp: 0,
+          prevOp: state.prevOp,
+          result: action.payload,
+          displayString: state.displayString + action.payload,
+        };
+      } else {
+        return {
+          ...state,
+          operation: action.payload,
+          prevOp:
+            state.prevOp === 0 ? state.currOp : state.prevOp / state.currOp,
+          currOp: 0,
+          result: action.payload,
+          displayString: state.displayString + action.payload,
+        };
+      }
 
     case "number":
       return {
         ...state,
-        currOp: +state.currOp + +action.payload,
-        result:
-          state.currOp === 0 ? action.payload : state.result + action.payload,
+        currOp:
+          state.currOp === 0 ? action.payload : state.currOp + action.payload,
+        displayString: state.displayString + action.payload,
       };
 
     case "computing":
-      console.log(state, action);
+      let result = eval(state.prevOp + state.operation + state.currOp);
       return {
         ...state,
-        prevOp: eval(state.prevOp + state.operation + +state.currOp),
-        result: eval(state.prevOp + state.operation + +state.currOp),
+        operation: action.payload,
+        prevOp: result,
+        currOp: 0,
+        result: result,
+        displayString: result,
       };
 
     case "clear":
@@ -65,6 +97,7 @@ export function reducer(state, action) {
         currOp: 0,
         operation: null,
         result: 0,
+        displayString: "",
       };
 
     default:
